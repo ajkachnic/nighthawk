@@ -19,13 +19,26 @@ class _Statement(_Ast):
 class Name(_Ast):
     name: str
 
+    def __str__(self) -> str:
+        return self.name
 
-@dataclass
+
+@dataclass(init=False)
 class FunctionDeclaration(_Ast):
     name: str
     args: List[Name]
-    body: List[_Statement] = field(default_factory=list)
+    body: List[_Statement] # = field(default_factory=list)
 
+    def __init__(self, *args):
+        self.name = args[0]
+        self.args = []
+        self.body = []
+
+        for arg in args[1:]:
+            if isinstance(arg, Name):
+                self.args.append(arg)
+            elif isinstance(arg, _Statement):
+                self.body.append(arg)
 
 @dataclass
 class ConstantDeclaration(_Ast):

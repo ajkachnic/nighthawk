@@ -4,7 +4,7 @@ start: declaration*
             | constant_declaration
 
 // function_declaration: "function" NAME "(" [IDENTIFIER ("," IDENTIFIER)*] ")" "{" statement* "}"
-function_declaration: "function" NAME "(" [NAME ("," NAME)*] ")" "{" statement* "}"
+function_declaration: "function" NAME "(" [NAME ("," NAME)*] ")" "{" [statement (";" statement)*] "}"
 
 ?statement: print_statement
 

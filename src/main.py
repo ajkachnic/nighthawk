@@ -1,5 +1,7 @@
 from lark import Lark, ast_utils
+import sys
 
+import gen
 import tree
 
 
@@ -19,5 +21,12 @@ def parse(text):
 
 
 if __name__ == '__main__':
-    while True:
-        print(parse(input('> ')))
+    # Read stdin input from pipe
+    text = sys.stdin.read()
+
+    parsed = parse(text)
+
+    generator = gen.CodeGenerator()
+    generator.gen(parsed)
+
+    print(str(generator.module))
