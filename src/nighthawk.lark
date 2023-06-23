@@ -1,0 +1,30 @@
+start: declaration*
+
+?declaration: function_declaration
+            | constant_declaration
+
+// function_declaration: "function" NAME "(" [IDENTIFIER ("," IDENTIFIER)*] ")" "{" statement* "}"
+function_declaration: "function" NAME "(" [NAME ("," NAME)*] ")" "{" statement* "}"
+
+?statement: print_statement
+
+constant_declaration: "const" NAME "=" DEC_NUMBER ";"
+
+print_statement: "print" STRING
+
+// value: ESCAPED_STRING
+//     | SIGNED_NUMBER
+//     | "true" | "false" | "null"
+
+// list : "[" [value ("," value)*] "]"
+
+// dict : "{" [pair ("," pair)*] "}"
+// pair : ESCAPED_STRING ":" value
+
+
+%import python (NAME, STRING, DEC_NUMBER)
+
+// %import common.ESCAPED_STRING
+// %import common.SIGNED_NUMBER
+%import common.WS
+%ignore WS
