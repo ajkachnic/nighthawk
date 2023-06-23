@@ -26,6 +26,8 @@ if __name__ == '__main__':
 
     parsed = parse(text)
 
+    print(parsed)
+
     generator = gen.CodeGenerator()
     generator.gen(parsed)
 

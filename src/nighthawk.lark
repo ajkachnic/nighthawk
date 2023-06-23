@@ -3,24 +3,49 @@ start: declaration*
 ?declaration: function_declaration
             | constant_declaration
 
-// function_declaration: "function" NAME "(" [IDENTIFIER ("," IDENTIFIER)*] ")" "{" statement* "}"
 function_declaration: "function" NAME "(" [NAME ("," NAME)*] ")" "{" [statement (";" statement)*] "}"
 
-?statement: print_statement
+constant_declaration: "const" NAME "=" expression ";"
 
-constant_declaration: "const" NAME "=" DEC_NUMBER ";"
+?statement: print_statement
+          | expression
 
 print_statement: "print" STRING
 
-// value: ESCAPED_STRING
-//     | SIGNED_NUMBER
-//     | "true" | "false" | "null"
+// Expresssion parsing
+?expression: logical
+          | NAME "=" logical -> assign_var
 
-// list : "[" [value ("," value)*] "]"
+?logical: equality
+        | logical "&&" equality -> and
+        | logical "||" equality -> or
 
-// dict : "{" [pair ("," pair)*] "}"
-// pair : ESCAPED_STRING ":" value
+?equality: comparision
+         | equality "==" comparision -> equal
+         | equality "!=" comparision -> not_equal
+?comparision: sum
+            | comparision "<" sum -> less_than
+            | comparision ">" sum -> greater_than
+            | comparision "<=" sum -> less_than_equal
+            | comparision ">=" sum -> greater_than_equal
 
+?sum: product
+    | sum "+" product -> add
+    | sum "-" product -> sub
+
+?product: atom
+        | product "*" atom -> mul
+        | product "/" atom -> div
+
+?atom: DEC_NUMBER
+     | "-" atom -> neg
+     | NAME
+     | TRUE -> boolean
+     | FALSE -> boolean
+     | "(" logical ")"
+
+TRUE: "true"
+FALSE: "false"
 
 %import python (NAME, STRING, DEC_NUMBER)
 

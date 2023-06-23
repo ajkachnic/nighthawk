@@ -1,3 +1,4 @@
+import eval
 import tree
 import qbe
 
@@ -16,12 +17,19 @@ class CodeGenerator:
         else:
           raise Exception(f'Unknown declaration type: {decl}')
 
-    def gen_const(decl: tree.ConstantDeclaration):
+    def gen_const(self, decl: tree.ConstantDeclaration):
+        value = eval.evaluate_expression(decl.value)
+        ty = qbe.Long
+
+        if isinstance(value, bool):
+            value = int(value)
+            ty = qbe.Byte
+
         return qbe.DataDef(
             linkage=qbe.Linkage.private(),
             name=decl.name.name,
             align=None,
-            items=[(qbe.Long, qbe.Constant(decl.value))]
+            items=[(ty, qbe.Constant(value))]
         )
 
     def emit_string_literal(self, string: str):

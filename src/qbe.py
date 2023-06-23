@@ -4,9 +4,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Generic, Optional, TypeVar
 
-
-
-
 T = TypeVar("T")
 
 
@@ -470,7 +467,7 @@ class Function:
             self.body[-1].add_instruction(instr)
 
     def __str__(self) -> str:
-        out = f"{str(self.linkage)} function";
+        out = f"{str(self.linkage)}function";
         if self.return_type is not None:
             out += f" {self.return_type}"
 
