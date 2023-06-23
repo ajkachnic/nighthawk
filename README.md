@@ -18,7 +18,7 @@ gcc out.s -o out # Turn assembly into binary
 ./out # woah magic
 ```
 
-### without nix
+### but what if i don't want to use nix?
 
 install nix and refer to **but how do i run it??**.
 
