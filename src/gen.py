@@ -25,6 +25,9 @@ class CodeGenerator:
             value = int(value)
             ty = qbe.Byte
 
+        if isinstance(value, float):
+            ty = qbe.Double
+
         return qbe.DataDef(
             linkage=qbe.Linkage.private(),
             name=decl.name.name,

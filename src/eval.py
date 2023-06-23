@@ -37,7 +37,7 @@ def evaluate_expression(node: tree.Expression):
             raise RuntimeError(f"Cannot evaluate variable {name} in constant expression")
         case tree.Boolean(value=value):
             return value
-        case n if isinstance(n, int):
+        case n if isinstance(n, int) or isinstance(n, float):
             return n
         case _:
             raise RuntimeError(f"Cannot evaluate expression {node} in constant expression")

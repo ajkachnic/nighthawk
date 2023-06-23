@@ -63,9 +63,20 @@ class ToAst(Transformer):
         # Remove quotation marks
         return s[1:-1]
 
-    def DEC_NUMBER(self, n):
-        return int(n)
-
+    def number(self, tok):
+        n = tok[0]
+        match n.type:
+            case "python__DEC_NUMBER":
+                return int(n)
+            case "python__HEX_NUMBER":
+                return int(n, 16)
+            case "python__OCT_NUMBER":
+                return int(n, 8)
+            case "python__BIN_NUMBER":
+                return int(n, 2)
+            case "python__FLOAT_NUMBER":
+                return float(n)
+            
     def NAME(self, n):
         return Name(n.value)
 
